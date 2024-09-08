@@ -3,8 +3,12 @@ import "./App.css";
 //components
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { useState } from "react";
 
 function App() {
+    //states
+    const [token, setToken] = useState(null);
+    //functions
     const router = createBrowserRouter([
         {
             path: "/",
@@ -17,10 +21,9 @@ function App() {
     ]);
 
     return (
-        <>
-            <h1 className="text-black">Rajmudra Food Junction</h1>
+        <main className="">
             <RouterProvider router={router} />
-        </>
+        </main>
     );
 }
 
