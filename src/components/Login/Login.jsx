@@ -1,25 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 //styles
 import "./Login.css";
-//variables
-const serverUrl = import.meta.env; //development/production backend url
+import { loginReq_to_Server } from "../../functions/functions";
+import Notification from "../Notification/Notification";
+//helper functions
 
 const Login = () => {
     //states
     const [formData, setFormData] = useState({ contact: "", password: "" });
+    const [loginError, setLoginError] = useState({
+        msg: "",
+        position: "bottom",
+        display: false,
+    });
+    const timeOutRef = useRef(null);
+
+    //router
+    const navigate = useNavigate();
+
+    //side effects
+    useEffect(() => {
+        if (timeOutRef.current) return clearTimeout(timeOutRef.current);
+    }, []);
 
     //functions
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formData);
-        // if (contact.length < 10) alert("Invalid Contact Number!");
-        console.log(serverUrl);
+        serverRequest();
     };
+
     const handleChange = (event) =>
         setFormData({
             ...formData,
             [event.target.name]: event.target.value,
         });
+
+    const serverRequest = async () => {
+        const loginData = await loginReq_to_Server(
+            formData.contact,
+            formData.password
+        );
+        if (loginData.status !== 200) {
+            let msg = "Contact / Password is wrong!";
+            if (loginData.status !== 401) {
+                msg = loginData?.message || "something went wrong!";
+            }
+            setLoginError({
+                msg,
+                position: "bottom",
+                display: true,
+            });
+            timeOutRef.current = setTimeout(() => {
+                setLoginError({ ...loginError, display: false });
+            }, 7500);
+        } else console.log(loginData.data);
+
+        if (loginData.status === 200) navigate("/dashboard");
+    };
 
     return (
         <div className="LoginWrapper flex flex-col items-center justify-center gap-8">
@@ -33,8 +71,8 @@ const Login = () => {
                         name="contact"
                         value={formData.contact}
                         onChange={handleChange}
-                        // required
-                        className="px-4 py-2 bg-inherit border border-greyish-blue border-solid"
+                        required
+                        className="px-4 py-2 bg-inherit border-b border-greyish-blue border-solid"
                     />
                     <input
                         type="password"
@@ -42,14 +80,20 @@ const Login = () => {
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                        // required
-                        className="px-4 py-2 bg-inherit border border-greyish-blue border-solid"
+                        required
+                        className="px-4 py-2 bg-inherit border-b border-greyish-blue border-solid"
                     />
                     <button className="bg-primary self-center w-[100px] px-4 py-2 bg-inherit rounded-lg">
                         Submit
                     </button>
                 </form>
             </div>
+            {loginError.display ? (
+                <Notification
+                    msg={loginError.msg}
+                    position={loginError.position}
+                />
+            ) : null}
         </div>
     );
 };
