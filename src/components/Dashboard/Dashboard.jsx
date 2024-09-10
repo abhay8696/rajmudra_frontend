@@ -5,8 +5,11 @@ import { setToken } from "../../redux/token/tokenSlice";
 import { setAdmin } from "../../redux/admin/adminSlice";
 //styles
 import "./Dashboard.css";
+//router
 import { useNavigate } from "react-router-dom";
+//components
 import Navbar from "../Navbar/Navbar";
+import ShopOverview from "../ShopOverview/ShopOverview";
 
 const Dashboard = () => {
     //redux
@@ -23,8 +26,9 @@ const Dashboard = () => {
         <>
             <Navbar />
             <div className="Dashboard commonPadding_with_Nav">
-                <h1 className="text-left">Dashboard</h1>
+                {/* <h1 className="text-left">Dashboard</h1> */}
                 {/* <h2>hello {admin.name}</h2> */}
+                <ShopOverview />
             </div>
         </>
     );

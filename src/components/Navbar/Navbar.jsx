@@ -69,7 +69,7 @@ const Navbar = () => {
         <nav className="bg-semi-dark-blue">
             <span className="navLeft">
                 <a href="#hero">
-                    <h1 className="brand">{"<Rajmudra/>"}</h1>
+                    <h1 className="brand">{"</>"}</h1>
                 </a>
             </span>
             {/* <NavList
