@@ -1,12 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+//redux
+import { useSelector, useDispatch } from "react-redux";
+import { setToken } from "../../redux/token/tokenSlice";
+import { setAdmin } from "../../redux/admin/adminSlice";
 //styles
 import "./Login.css";
-import { loginReq_to_Server } from "../../functions/functions";
-import Notification from "../Notification/Notification";
 //helper functions
+import {
+    getFromLocal,
+    loginReq_to_Server,
+    saveToLocal,
+} from "../../functions/functions";
+//components
+import Notification from "../Notification/Notification";
 
 const Login = () => {
+    //redux
+    const token = useSelector((state) => state.token.value);
+    const admin = useSelector((state) => state.admin.value);
+    const dispatch = useDispatch();
     //states
     const [formData, setFormData] = useState({ contact: "", password: "" });
     const [loginError, setLoginError] = useState({
@@ -21,6 +34,11 @@ const Login = () => {
 
     //side effects
     useEffect(() => {
+        const tokenFromLocal = getFromLocal("token");
+        const adminFromLocal = getFromLocal("admin");
+
+        if (tokenFromLocal && adminFromLocal) navigate("/dashboard");
+
         if (timeOutRef.current) return clearTimeout(timeOutRef.current);
     }, []);
 
@@ -56,7 +74,16 @@ const Login = () => {
             }, 7500);
         } else console.log(loginData.data);
 
-        if (loginData.status === 200) navigate("/dashboard");
+        if (loginData.status === 200) {
+            console.log(loginData);
+            dispatch(setToken(loginData?.data?.tokens?.access?.token));
+            dispatch(setAdmin(loginData?.data?.admin));
+
+            saveToLocal("token", loginData?.data?.tokens?.access?.token);
+            saveToLocal("admin", loginData?.data?.admin);
+
+            navigate("/dashboard");
+        }
     };
 
     return (
