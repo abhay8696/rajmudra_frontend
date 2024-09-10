@@ -6,6 +6,7 @@ import { setAdmin } from "../../redux/admin/adminSlice";
 //styles
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 const Dashboard = () => {
     //redux
@@ -19,10 +20,13 @@ const Dashboard = () => {
         if (!token || !admin) navigate("/login");
     }, []);
     return (
-        <div className="Dashboard">
-            <h1>Dashboard</h1>
-            <h2>hello {admin.name}</h2>
-        </div>
+        <>
+            <Navbar />
+            <div className="Dashboard commonPadding_with_Nav">
+                <h1 className="text-left">Dashboard</h1>
+                {/* <h2>hello {admin.name}</h2> */}
+            </div>
+        </>
     );
 };
 

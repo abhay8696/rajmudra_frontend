@@ -30,8 +30,16 @@ body {
     background-color: var(--color-dark-blue);
 }
 
+#root {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+}
 main {
     width: 100vw;
+    max-width: 1400px;
     height: 100vh;
 }
 
@@ -133,9 +141,16 @@ p {
     cursor: pointer;
 }
 
+.commonPadding_with_Nav {
+    padding-top: calc(100px + 1rem); /* nav height + 1rem */
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
+}
+
 /* all screens above 768px */
 @media screen and (min-width: 768px) {
     main {
-        padding: 1rem !important;
+        /* padding: 1rem !important; */
     }
 }
