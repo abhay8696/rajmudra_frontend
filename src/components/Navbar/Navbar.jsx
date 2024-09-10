@@ -72,10 +72,10 @@ const Navbar = () => {
                     <h1 className="brand">{"<Rajmudra/>"}</h1>
                 </a>
             </span>
-            <NavList
+            {/* <NavList
                 ulClasses="navList navList-bg"
                 liClasses="navLinks navLinks-bg hoverAction"
-            />
+            /> */}
             <NavList
                 toggleNav={handleClick}
                 ulClasses={`navList navList-sm ${navListPosition}`}
