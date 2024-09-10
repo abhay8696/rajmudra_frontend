@@ -45,7 +45,7 @@ const ShopCard = (props) => {
                 subText={"rent"}
             />
             <div className="flex-1 flex items-end justify-center">
-                <button className="align-end border border-white rounded-lg text-white w-[100%] py-2 cursor-pointer">
+                <button className="align-end border border-white rounded-lg text-white w-[100%] py-2 cursor-pointer hover:border-primary hover:text-primary">
                     More Info
                 </button>
             </div>

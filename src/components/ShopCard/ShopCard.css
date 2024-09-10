@@ -1,0 +1,17 @@
+.NewShopCard {
+    background-color: var(--color-primary);
+    cursor: pointer;
+}
+
+.NewShopCard img,
+.ShopCard button {
+    transition: 250ms all;
+}
+
+.NewShopCard:hover img {
+    scale: 110%;
+    transform: translateY(-10%);
+}
+
+.ShopCard button {
+}

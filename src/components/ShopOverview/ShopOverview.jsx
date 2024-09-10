@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ShopOverview.css";
 import { getAllShop_from_server } from "../../functions/functions";
 import ShopCard from "../ShopCard/ShopCard";
+import NewShopCard from "../ShopCard/NewShopCard";
 
 const ShopOverview = () => {
     const [shops, setShops] = useState();
@@ -28,6 +29,7 @@ const ShopOverview = () => {
 
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <NewShopCard />
                 {shops.map((card) => (
                     <ShopCard data={card} />
                 ))}
@@ -38,7 +40,7 @@ const ShopOverview = () => {
     //components
     return (
         <div className="ShopOverview text-left h-[50vh] rounded-xl flex flex-col gap-4">
-            <h3>All Shops</h3>
+            <h3>Shops</h3>
             <DisplayCards />
         </div>
     );
