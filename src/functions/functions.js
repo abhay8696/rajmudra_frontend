@@ -11,7 +11,18 @@ export const loginReq_to_Server = async (contact, password) => {
         const res = await axios.post(loginEndpoint, { contact, password });
         return res;
     } catch (err) {
-        return err;
+        if (
+            err.code === "ERR_NETWORK" ||
+            err.message.includes("Network Error") ||
+            err.message.includes("ERR_CONNECTION_REFUSED")
+        ) {
+            throw new Error({
+                message:
+                    "Unable to connect to the server. Please check if the backend is running.",
+            });
+        }
+        // Handle other errors
+        throw new Error({ message: err.message || "An error occurred." });
     }
 };
 
@@ -26,7 +37,20 @@ export const getAllShop_from_server = async (token) => {
 
         return response.data;
     } catch (err) {
-        return err;
+        if (
+            err.code === "ERR_NETWORK" ||
+            err.message.includes("Network Error") ||
+            err.message.includes("ERR_CONNECTION_REFUSED")
+        ) {
+            throw new Error(
+                JSON.stringify({
+                    message:
+                        "Unable to connect to the server. Please check if the backend is running.",
+                })
+            );
+        }
+        // Handle other errors
+        throw new Error({ message: err.message || "An error occurred." });
     }
 };
 

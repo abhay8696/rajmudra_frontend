@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import menuIcon from "../../assets/menu.svg";
 import settingsIcon from "../../assets/settings.svg";
 import closeIcon from "../../assets/close.svg";
+import logoIcon from "../../assets/logo.svg";
 
 const NavList = ({ ulClasses, liClasses, toggleNav }) => {
     const array = ["shops", "collections", "employees", "expenses"];
@@ -68,8 +69,13 @@ const Navbar = () => {
     return (
         <nav className="bg-semi-dark-blue">
             <span className="navLeft">
-                <a href="#hero">
-                    <h1 className="brand">{"</>"}</h1>
+                <a className="flex flex-col items-center justify-center gap-1">
+                    <img src={logoIcon} alt="logo icon" className="w-[50px]" />
+                    <span className="text-[10px] uppercase">
+                        <span className="text-primary">rajmudra</span>
+                        <span>{" food "}</span>
+                        <span>junction</span>
+                    </span>
                 </a>
             </span>
             {/* <NavList

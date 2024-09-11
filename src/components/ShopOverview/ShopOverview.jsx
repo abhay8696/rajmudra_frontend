@@ -6,9 +6,14 @@ import "./ShopOverview.css";
 import { getAllShop_from_server } from "../../functions/functions";
 import ShopCard from "../ShopCard/ShopCard";
 import NewShopCard from "../ShopCard/NewShopCard";
+import { useNavigate } from "react-router-dom";
 
 const ShopOverview = () => {
     const [shops, setShops] = useState();
+
+    //router
+    const navigate = useNavigate();
+
     //redux
     const token = useSelector((state) => state.token.value);
     //on load
@@ -20,17 +25,23 @@ const ShopOverview = () => {
     //functions
     const onLoad = async () => {
         if (!token) return;
-        const allShops = await getAllShop_from_server(token);
-        setShops(allShops);
+
+        try {
+            const allShops = await getAllShop_from_server(token);
+            console.log(allShops);
+            setShops(allShops);
+        } catch (err) {
+            navigate("/error");
+        }
     };
 
     const DisplayCards = () => {
-        if (!shops) return;
+        if (!shops) return [];
 
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 <NewShopCard />
-                {shops.map((card) => (
+                {shops?.map((card) => (
                     <ShopCard data={card} />
                 ))}
             </div>
@@ -39,9 +50,9 @@ const ShopOverview = () => {
 
     //components
     return (
-        <div className="ShopOverview text-left h-[50vh] rounded-xl flex flex-col gap-4">
+        <div className="ShopOverview text-left rounded-xl flex flex-col gap-4">
             <h3>Shops</h3>
-            <DisplayCards />
+            {shops ? <DisplayCards /> : null}
         </div>
     );
 };

@@ -1,6 +1,7 @@
 .NewShopCard {
     background-color: var(--color-primary);
     cursor: pointer;
+    padding: 0;
 }
 
 .NewShopCard img,
@@ -11,6 +12,16 @@
 .NewShopCard:hover img {
     scale: 110%;
     transform: translateY(-10%);
+}
+
+.NewShopCard a {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .ShopCard button {

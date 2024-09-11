@@ -6,6 +6,9 @@ import { setToken } from "../../redux/token/tokenSlice";
 import { setAdmin } from "../../redux/admin/adminSlice";
 //styles
 import "./Login.css";
+//assets
+import logoIcon from "../../assets/logo.svg";
+
 //helper functions
 import {
     getFromLocal,
@@ -87,8 +90,15 @@ const Login = () => {
     };
 
     return (
-        <div className="LoginWrapper flex flex-col items-center justify-center gap-8">
-            <h1 className="text-primary">Rajmudra Food Junction</h1>
+        <div className="LoginWrapper flex flex-col items-center justify-center gap-16">
+            <div className="flex flex-col justify-center items-center gap-2">
+                <img src={logoIcon} alt="logo icon" />
+                <span className="uppercase">
+                    <span className="text-primary">rajmudra</span>
+                    <span>{" food "}</span>
+                    <span>junction</span>
+                </span>
+            </div>
             <div className="Login flex flex-col bg-semi-dark-blue rounded-lg p-8 gap-8">
                 <h2 className="">Login</h2>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-8">

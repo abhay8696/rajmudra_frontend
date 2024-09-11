@@ -9,6 +9,8 @@ import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { useEffect } from "react";
 import { getFromLocal } from "./functions/functions";
+import NewShopForm from "./components/NewShopForm/NewShopForm";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 function App() {
     //redux
@@ -38,6 +40,14 @@ function App() {
         {
             path: "/login",
             element: <Login />,
+        },
+        {
+            path: "/newShopForm",
+            element: <NewShopForm />,
+        },
+        {
+            path: "/error",
+            element: <ErrorPage />,
         },
     ]);
 

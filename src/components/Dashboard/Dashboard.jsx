@@ -25,10 +25,11 @@ const Dashboard = () => {
     return (
         <>
             <Navbar />
-            <div className="Dashboard commonPadding_with_Nav">
+            <div className="Dashboard commonPadding_with_Nav flex flex-col gap-4">
                 {/* <h1 className="text-left">Dashboard</h1> */}
                 {/* <h2>hello {admin.name}</h2> */}
                 <ShopOverview />
+                <h3 className="text-left mt-4">Daily Collections</h3>
             </div>
         </>
     );
