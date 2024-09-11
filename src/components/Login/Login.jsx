@@ -17,6 +17,7 @@ import {
 } from "../../functions/functions";
 //components
 import Notification from "../Notification/Notification";
+import Button from "../Button/Button";
 
 const Login = () => {
     //redux
@@ -120,9 +121,10 @@ const Login = () => {
                         required
                         className="px-4 py-2 bg-inherit border-b border-greyish-blue border-solid"
                     />
-                    <button className="bg-primary self-center w-[100px] px-4 py-2 bg-inherit rounded-lg">
+                    {/* <button className="bg-primary self-center w-[100px] px-4 py-2 bg-inherit rounded-lg">
                         Submit
-                    </button>
+                    </button> */}
+                    <Button text={text} type={"submit"} />
                 </form>
             </div>
             {loginError.display ? (
