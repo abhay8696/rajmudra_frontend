@@ -1,35 +1,85 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
+//redux
+import { useSelector, useDispatch } from "react-redux";
+//router
+import { useNavigate } from "react-router-dom";
 //assets
 import personIcon from "../../assets/person.svg";
 import Button from "../Button/Button";
+//backend functions
+import { shopRequests } from "../../functions/backendFunctions";
+//styles
+import "./NewShopForm.css";
+import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
 
 const NewShopForm = () => {
     //states
     const [formData, setFormData] = useState({
-        ownerName: "",
-        shopNo: "",
-        registrationNo: "",
-        ownerContact: "",
-        ownerAddress: "",
-        ownerAdhaar: "",
-        rentAgreementStartDate: "",
-        rentAgreementEndDate: "",
-        tenure: "",
-        monthlyRent: "",
+        ownerName: "Jon snow",
+        shopNo: "s-90",
+        registrationNo: "reg500",
+        ownerContact: "1234567890",
+        ownerAddress: "123 Main Street, City, Country",
+        ownerAdhaar: "123456789",
+        rentAgreementStartDate: "2024-09-12",
+        rentAgreementEndDate: "2025-09-11",
+        tenure: "1",
+        monthlyRent: "50000",
         ownerPhoto: personIcon,
         ownerAdhaarPhoto: personIcon,
+        rentAgreement: {
+            startDate: "",
+            endDate: "",
+        },
+    });
+    const [errorPop, SetErrorPop] = useState({
+        status: "none", // none/show/hide
+        text: "",
     });
 
+    //router
+    const navigate = useNavigate();
+
+    //redux
+    const token = useSelector((state) => state.token.value);
+
     //functions
+    const closeErrPop = () => SetErrorPop({ ...errorPop, status: "hide" });
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formData);
+        closeErrPop();
+        if (!token) navigate("/login");
+        sendReq();
+    };
+
+    const sendReq = async () => {
+        try {
+            await shopRequests(
+                "post",
+                {
+                    ...formData,
+                    rentAgreement: {
+                        startDate: formData.rentAgreementStartDate,
+                        endDate: formData.rentAgreementStartDate,
+                    },
+                },
+                token
+            );
+        } catch (err) {
+            const text = JSON.parse(
+                err?.message || '{"message": "Internal server error"}'
+            );
+            console.log(text);
+
+            SetErrorPop({ status: "show", text });
+        }
     };
     const handleChange = (event) => {
+        const { name, value } = event.target;
         setFormData((preFormData) => ({
             ...preFormData,
-            [event.target.name]: event.target.value,
+            [name]: value,
         }));
     };
     const formInputDiv = (id, labelValue, inputType, classStr = "") => {
@@ -57,6 +107,11 @@ const NewShopForm = () => {
 
     return (
         <>
+            <ErrorPopUp
+                text={errorPop.text}
+                closePopUp={closeErrPop}
+                status={errorPop.status}
+            />
             <Navbar />
             <div className="NewShopForm-wrapper commonPadding_with_Nav flex flex-col gap-8 ">
                 <h1 className="text-left">
@@ -65,14 +120,14 @@ const NewShopForm = () => {
                 </h1>
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col gap-8 overflow-auto"
+                    className="flex-1 flex flex-col gap-8 overflow-auto"
                 >
                     {/* owner deatila */}
                     <div className="flex flex-col gap-2">
                         <h3 className="text-left capitalize text-greyish-blue font-bold">
                             owner
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {formInputDiv("ownerName", "name", "text")}
                             {formInputDiv("ownerContact", "contact", "number")}
                             {formInputDiv("ownerAdhaar", "adhaar", "number")}
@@ -80,7 +135,7 @@ const NewShopForm = () => {
                                 "ownerAddress",
                                 "address",
                                 "text",
-                                "md:col-span-2 lg:col-span-3"
+                                "sm:col-span-2 lg:col-span-3"
                             )}
                         </div>
                     </div>
@@ -90,7 +145,7 @@ const NewShopForm = () => {
                         <h3 className="text-left capitalize text-greyish-blue font-bold">
                             shop
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {formInputDiv("shopNo", "shop no", "text")}
                             {formInputDiv(
                                 "registrationNo",
@@ -106,7 +161,7 @@ const NewShopForm = () => {
                             Rent Agreement
                         </h3>
                         <div className="flex flex-col gap-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                                 {formInputDiv(
                                     "rentAgreementStartDate",
                                     "Start Date",
@@ -118,7 +173,7 @@ const NewShopForm = () => {
                                     "date"
                                 )}
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                                 {formInputDiv("tenure", "tenure", "number")}
                                 {formInputDiv(
                                     "monthlyRent",

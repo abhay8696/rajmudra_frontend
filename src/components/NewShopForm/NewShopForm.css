@@ -1,0 +1,4 @@
+.NewShopForm-wrapper {
+    /* height: calc(100vh - 100px); screen height - navbar height */
+    height: 100vh;
+}

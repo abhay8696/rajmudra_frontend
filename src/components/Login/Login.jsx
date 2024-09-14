@@ -124,7 +124,7 @@ const Login = () => {
                     {/* <button className="bg-primary self-center w-[100px] px-4 py-2 bg-inherit rounded-lg">
                         Submit
                     </button> */}
-                    <Button text={text} type={"submit"} />
+                    <Button text={"login"} type={"submit"} />
                 </form>
             </div>
             {loginError.display ? (
