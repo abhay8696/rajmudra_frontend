@@ -17,7 +17,7 @@ const ErrorPopUp = (props) => {
     return (
         <div
             onClick={closePopUp}
-            className={`${customClass} popUp-${status} ErrorPopUp fixed bottom-4 left-4 bg-red-800 p-2 flex gap-4 rounded-lg`}
+            className={`${customClass} flex justify-between text-[0.9rem] popUp-${status} ErrorPopUp fixed bottom-4 left-4 right-4 md:bottom-4 md:left-4 md:right-auto bg-red-800 p-2 flex gap-4 rounded-lg`}
         >
             <span>{text}</span>
             <img

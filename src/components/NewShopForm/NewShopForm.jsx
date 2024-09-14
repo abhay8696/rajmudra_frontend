@@ -6,12 +6,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 //assets
 import personIcon from "../../assets/person.svg";
+//components
 import Button from "../Button/Button";
 //backend functions
 import { shopRequests } from "../../functions/backendFunctions";
 //styles
 import "./NewShopForm.css";
 import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
+import LoadingImg from "../LoadingImg/LoadingImg";
 
 const NewShopForm = () => {
     //states
@@ -185,9 +187,9 @@ const NewShopForm = () => {
                     </div>
 
                     <Button
-                        text={"submit"}
+                        text={<LoadingImg styles="w-[20px]" />}
                         type={"submit"}
-                        customClass="w-[500px] max-w-[90vw]"
+                        customClass="w-[500px] max-w-[90vw] flex item-center justify-center"
                     />
                 </form>
             </div>
