@@ -54,23 +54,38 @@ export const getAllShop_from_server = async (token) => {
     }
 };
 
-export const shopRequests = async (type, shopObject, token) => {
-    const endpoint = `${serverUrl.VITE_REACT_APP_serverURL}/shop/new`;
+export const shopRequests = async ({
+    method,
+    shopObject,
+    token,
+    shopId,
+    type,
+    conditionKey, //shopNo, registrationNo, ownerName, etc
+    conditionVal,
+}) => {
+    let endpoint = `${serverUrl.VITE_REACT_APP_serverURL}/shop`;
+
+    if (type === "create") endpoint = endpoint.concat("/new");
+    if (type === "condition")
+        endpoint = endpoint.concat(
+            `/condition/${conditionKey}/${conditionVal}`
+        );
+    else endpoint = endpoint.concat(`/${shopId}`);
 
     const config = {
-        method: type, // "get", "post", "put", "delete"
+        method: method, // "get", "post", "put", "delete"
         url: endpoint,
         headers: {
             Authorization: `Bearer ${token}`, // Include the token in the Authorization header
         },
-        data: shopObject,
+        data: shopObject || {},
     };
 
     try {
         const response = await axios(config);
         return response.data;
     } catch (err) {
-        // console.log(err.response.data.message);
+        console.log(err);
         if (
             err.code === "ERR_NETWORK" ||
             err.message.includes("Network Error") ||

@@ -1,16 +1,19 @@
+import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 //redux
 import { useDispatch } from "react-redux";
 import { setToken } from "./redux/token/tokenSlice";
 import { setAdmin } from "./redux/admin/adminSlice";
+//functions
+import { getFromLocal } from "./functions/functions";
 //components
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
-import { useEffect } from "react";
-import { getFromLocal } from "./functions/functions";
 import NewShopForm from "./components/NewShopForm/NewShopForm";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
+import ShopComp from "./components/ShopComp/ShopComp";
+import ShopOverview from "./components/ShopOverview/ShopOverview";
 
 function App() {
     //redux
@@ -34,10 +37,6 @@ function App() {
             element: <Dashboard />,
         },
         {
-            path: "/dashboard",
-            element: <Dashboard />,
-        },
-        {
             path: "/login",
             element: <Login />,
         },
@@ -48,6 +47,10 @@ function App() {
         {
             path: "/error",
             element: <ErrorPage />,
+        },
+        {
+            path: "/shop/:shopNo",
+            element: <ShopComp />,
         },
     ]);
 

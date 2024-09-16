@@ -7,8 +7,10 @@ import { getAllShop_from_server } from "../../functions/functions";
 import ShopCard from "../ShopCard/ShopCard";
 import NewShopCard from "../ShopCard/NewShopCard";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
-const ShopOverview = () => {
+const ShopOverview = (props) => {
+    const { inDashBoard } = props;
     const [shops, setShops] = useState();
 
     //router
@@ -50,10 +52,12 @@ const ShopOverview = () => {
 
     //components
     return (
-        <div className="ShopOverview text-left rounded-xl flex flex-col gap-4">
-            <h3>Shops</h3>
-            {shops ? <DisplayCards /> : null}
-        </div>
+        <>
+            <div className="ShopOverview text-left rounded-xl flex flex-col gap-4">
+                <h3>Shops</h3>
+                {shops ? <DisplayCards /> : null}
+            </div>
+        </>
     );
 };
 

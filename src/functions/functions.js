@@ -68,3 +68,35 @@ export const getFromLocal = (name) => {
 
     return null;
 };
+
+export const formatDate = (isoString) => {
+    if (!isoString) return "No date found";
+    const date = new Date(isoString);
+
+    // Define month names
+    const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ];
+
+    // Get day, month, and year from the Date object
+    const day = date.getUTCDate();
+    const month = monthNames[date.getUTCMonth()]; // Months are 0-indexed, so we use getUTCMonth()
+    const year = date.getUTCFullYear();
+
+    // Return formatted date string
+    return `${day} ${month} ${year}`;
+};
+
+// Example usage:
+console.log(formatDate("2024-02-01T00:00:00.000Z")); // Output: "1 Feb 2024"

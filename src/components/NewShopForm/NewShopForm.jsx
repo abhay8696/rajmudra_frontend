@@ -14,6 +14,7 @@ import { shopRequests } from "../../functions/backendFunctions";
 import "./NewShopForm.css";
 import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
 import LoadingImg from "../LoadingImg/LoadingImg";
+import BackButton from "../BackButton/BackButton";
 
 const NewShopForm = () => {
     //states
@@ -39,6 +40,8 @@ const NewShopForm = () => {
         status: "none", // none/show/hide
         text: "",
     });
+    const [requestPending, setRequestPending] = useState(false);
+    const [newShop, setNewShop] = useState();
 
     //router
     const navigate = useNavigate();
@@ -56,18 +59,21 @@ const NewShopForm = () => {
     };
 
     const sendReq = async () => {
+        setRequestPending(true);
         try {
-            await shopRequests(
-                "post",
-                {
+            const shop = await shopRequests({
+                method: "post",
+                shopObject: {
                     ...formData,
                     rentAgreement: {
                         startDate: formData.rentAgreementStartDate,
                         endDate: formData.rentAgreementStartDate,
                     },
                 },
-                token
-            );
+                token,
+                type: "create",
+            });
+            if (shop) setNewShop(shop);
         } catch (err) {
             const text = JSON.parse(
                 err?.message || '{"message": "Internal server error"}'
@@ -76,6 +82,7 @@ const NewShopForm = () => {
 
             SetErrorPop({ status: "show", text });
         }
+        setRequestPending(false);
     };
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -116,10 +123,13 @@ const NewShopForm = () => {
             />
             <Navbar />
             <div className="NewShopForm-wrapper commonPadding_with_Nav flex flex-col gap-8 ">
-                <h1 className="text-left">
-                    <span className="text-primary">{"Add "}</span>
-                    <span>New Shop</span>
-                </h1>
+                <div className="flex gap-2 flex items-center justify-start">
+                    <BackButton />
+                    <h1 className="text-left">
+                        <span className="text-primary">{"Add "}</span>
+                        <span>New Shop</span>
+                    </h1>
+                </div>
                 <form
                     onSubmit={handleSubmit}
                     className="flex-1 flex flex-col gap-8 overflow-auto"
@@ -187,9 +197,10 @@ const NewShopForm = () => {
                     </div>
 
                     <Button
-                        text={<LoadingImg styles="w-[20px]" />}
+                        text={"submit"}
                         type={"submit"}
-                        customClass="w-[500px] max-w-[90vw] flex item-center justify-center"
+                        requestPending={requestPending}
+                        customClass="bg-primary w-[100px] px-4 py-2 w-[500px] max-w-[90vw] flex item-center justify-center"
                     />
                 </form>
             </div>

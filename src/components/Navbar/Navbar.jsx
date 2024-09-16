@@ -69,14 +69,20 @@ const Navbar = () => {
     return (
         <nav className="bg-semi-dark-blue">
             <span className="navLeft">
-                <a className="flex flex-col items-center justify-center gap-1">
-                    <img src={logoIcon} alt="logo icon" className="w-[50px]" />
-                    <span className="text-[10px] uppercase">
-                        <span className="text-primary">rajmudra</span>
-                        <span>{" food "}</span>
-                        <span>junction</span>
+                <Link to={`/`}>
+                    <span className="flex flex-col items-center justify-center gap-1">
+                        <img
+                            src={logoIcon}
+                            alt="logo icon"
+                            className="w-[50px]"
+                        />
+                        <span className="text-[10px] uppercase">
+                            <span className="text-primary">rajmudra</span>
+                            <span>{" food "}</span>
+                            <span>junction</span>
+                        </span>
                     </span>
-                </a>
+                </Link>
             </span>
             {/* <NavList
                 ulClasses="navList navList-bg"

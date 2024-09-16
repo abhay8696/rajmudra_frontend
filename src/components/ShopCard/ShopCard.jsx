@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+//redux
+import { useSelector, useDispatch } from "react-redux";
 //styles
 import "./ShopCard.css";
 //assets
 import shopIcon from "../../assets/shop.svg";
+//components
+import LoadingImg from "../LoadingImg/LoadingImg";
+import Button from "../Button/Button";
 
 const CardText = ({ text, subText, bg, padding }) => {
     return (
@@ -20,11 +26,17 @@ const CardText = ({ text, subText, bg, padding }) => {
 const ShopCard = (props) => {
     const { data } = props;
 
+    //router
+    const navigate = useNavigate();
+
+    //redux
+    const token = useSelector((state) => state.token.value);
+
+    //functions
+    const handleClick = () => navigate(`/shop/${data.shopNo}`);
+
     return (
-        <div
-            onClick={() => console.log(data)}
-            className="flex flex-col gap-4 ShopCard p-4 bg-semi-dark-blue rounded-lg"
-        >
+        <div className="flex flex-col gap-4 ShopCard p-4 bg-semi-dark-blue rounded-lg">
             <div className="flex justify-between items-start">
                 <img src={shopIcon} alt="shop icon" className="w-[40px]" />
                 <CardText
@@ -45,9 +57,11 @@ const ShopCard = (props) => {
                 subText={"rent"}
             />
             <div className="flex-1 flex items-end justify-center">
-                <button className="align-end border border-white rounded-lg text-white w-[100%] py-2 cursor-pointer hover:border-primary hover:text-primary">
-                    More Info
-                </button>
+                <Button
+                    clickFunction={handleClick}
+                    customClass="flex items-center justify-center align-end border border-white rounded-lg text-white w-[100%] py-2 cursor-pointer "
+                    text={"More Info"}
+                />
             </div>
         </div>
     );

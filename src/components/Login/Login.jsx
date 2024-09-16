@@ -41,7 +41,7 @@ const Login = () => {
         const tokenFromLocal = getFromLocal("token");
         const adminFromLocal = getFromLocal("admin");
 
-        if (tokenFromLocal && adminFromLocal) navigate("/dashboard");
+        if (tokenFromLocal && adminFromLocal) navigate("/");
 
         if (timeOutRef.current) return clearTimeout(timeOutRef.current);
     }, []);
@@ -86,7 +86,7 @@ const Login = () => {
             saveToLocal("token", loginData?.data?.tokens?.access?.token);
             saveToLocal("admin", loginData?.data?.admin);
 
-            navigate("/dashboard");
+            navigate("/");
         }
     };
 

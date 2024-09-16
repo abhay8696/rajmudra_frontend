@@ -1,12 +1,28 @@
 import React from "react";
+import LoadingImg from "../LoadingImg/LoadingImg";
 
-const Button = ({ text, type, customClass }) => {
+const Button = ({ text, type, customClass, clickFunction, requestPending }) => {
     return (
         <button
             type={type}
-            className={`${customClass} capitalize bg-primary self-center w-[100px] px-4 py-2 bg-inherit rounded-lg`}
+            className={`${customClass} flex items-center justify-center gap-2 capitalize self-center  bg-inherit rounded-lg`}
+            onClick={clickFunction}
         >
-            {text}
+            <LoadingImg customClass={`w-[25px] opacity-0`} />
+
+            <span
+                className={`${
+                    requestPending ? "opacity-50" : "opacity-100"
+                } transition-all duration-[250ms]`}
+            >
+                {text}
+            </span>
+
+            <LoadingImg
+                customClass={`w-[25px] transition-all duration-[250ms] ${
+                    requestPending ? "opacity-100" : "opacity-0"
+                }`}
+            />
         </button>
     );
 };
