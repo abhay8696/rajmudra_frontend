@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar/Navbar";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 //router
 import { useNavigate } from "react-router-dom";
 //assets
 import personIcon from "../../assets/person.svg";
-//components
-import Button from "../Button/Button";
 //backend functions
 import { shopRequests } from "../../functions/backendFunctions";
 //styles
 import "./NewShopForm.css";
+//components
+import Button from "../Button/Button";
 import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
 import LoadingImg from "../LoadingImg/LoadingImg";
 import BackButton from "../BackButton/BackButton";
+import Navbar from "../Navbar/Navbar";
 
 const NewShopForm = () => {
     //states
@@ -73,7 +73,9 @@ const NewShopForm = () => {
                 token,
                 type: "create",
             });
-            if (shop) setNewShop(shop);
+            if (shop) {
+                navigate(`/shop/${shop.shopNo}`);
+            }
         } catch (err) {
             const text = JSON.parse(
                 err?.message || '{"message": "Internal server error"}'
@@ -142,7 +144,7 @@ const NewShopForm = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                             {formInputDiv("ownerName", "name", "text")}
                             {formInputDiv("ownerContact", "contact", "number")}
-                            {formInputDiv("ownerAdhaar", "adhaar", "number")}
+                            {formInputDiv("ownerAdhaar", "adhaar", "text")}
                             {formInputDiv(
                                 "ownerAddress",
                                 "address",

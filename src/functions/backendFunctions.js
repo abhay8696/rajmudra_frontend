@@ -66,7 +66,7 @@ export const shopRequests = async ({
     let endpoint = `${serverUrl.VITE_REACT_APP_serverURL}/shop`;
 
     if (type === "create") endpoint = endpoint.concat("/new");
-    if (type === "condition")
+    else if (type === "condition")
         endpoint = endpoint.concat(
             `/condition/${conditionKey}/${conditionVal}`
         );
@@ -80,7 +80,7 @@ export const shopRequests = async ({
         },
         data: shopObject || {},
     };
-
+    console.log(config);
     try {
         const response = await axios(config);
         return response.data;
@@ -92,18 +92,15 @@ export const shopRequests = async ({
             err.message.includes("ERR_CONNECTION_REFUSED")
         ) {
             throw new Error(
-                JSON.stringify({
-                    message:
-                        "Unable to connect to the server. Please check if the backend is running.",
-                })
+                JSON.stringify(
+                    "Unable to connect to the server. Please check if the backend is running."
+                )
             );
         }
         // Handle other errors
         throw new Error(
             JSON.stringify(
-                err?.response?.data?.message || {
-                    message: "Internal Server Error",
-                }
+                err?.response?.data?.message || "Internal Server Error"
             )
         );
     }
