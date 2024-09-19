@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 //redux
 import { useSelector, useDispatch } from "react-redux";
+import { setToken } from "../../redux/token/tokenSlice";
+import { setAdmin } from "../../redux/admin/adminSlice";
 //styles
 import "./ShopOverview.css";
-import { getAllShop_from_server } from "../../functions/functions";
+import { getAllShops_from_server } from "../../functions/backendFunctions";
 import ShopCard from "../ShopCard/ShopCard";
 import NewShopCard from "../ShopCard/NewShopCard";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
+import LoadingImg from "../LoadingImg/LoadingImg";
 
 const ShopOverview = (props) => {
     const { inDashBoard } = props;
+
+    //states
     const [shops, setShops] = useState();
+    const [requestPending, setRequestPending] = useState(false);
 
     //router
     const navigate = useNavigate();
@@ -20,7 +26,7 @@ const ShopOverview = (props) => {
     const token = useSelector((state) => state.token.value);
     //on load
     useEffect(() => {
-        // const getAllShop = await getAllShop_from_server(token);
+        // const getAllShop = await getAllShops_from_server(token);
         onLoad();
     }, []);
 
@@ -28,13 +34,28 @@ const ShopOverview = (props) => {
     const onLoad = async () => {
         if (!token) return;
 
+        setRequestPending(true);
+
         try {
-            const allShops = await getAllShop_from_server(token);
+            const allShops = await getAllShops_from_server(token);
             console.log(allShops);
             setShops(allShops);
         } catch (err) {
+            console.log(err.message);
+            if (
+                err.message === "admin not found" ||
+                err.message === "Please authenticate, try logging in again"
+            ) {
+                navigate("/login");
+                localStorage.setItem("admin", null);
+                localStorage.setItem("token", null);
+                dispatch(setToken(null));
+                dispatch(setAdmin(null));
+            }
             navigate("/error");
         }
+
+        setRequestPending(false);
     };
 
     const DisplayCards = () => {
@@ -54,7 +75,14 @@ const ShopOverview = (props) => {
     return (
         <>
             <div className="ShopOverview text-left rounded-xl flex flex-col gap-4">
-                <h3>Shops</h3>
+                <h3 className="flex gap-4">
+                    <span>Shops</span>
+                    <LoadingImg
+                        customClass={`w-[25px] transition-all duration-[250ms] ${
+                            requestPending ? "opacity-100" : "opacity-0"
+                        }`}
+                    />
+                </h3>
                 {shops ? <DisplayCards /> : null}
             </div>
         </>

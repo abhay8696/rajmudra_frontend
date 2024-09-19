@@ -12,6 +12,7 @@ import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
 import { formatDate } from "../../functions/functions";
 import Button from "../Button/Button";
 import BackButton from "../BackButton/BackButton";
+import LoadingImg from "../LoadingImg/LoadingImg";
 
 const ShopComp = () => {
     //states
@@ -42,7 +43,13 @@ const ShopComp = () => {
                 <span className="w-[20%] uppercase text-sm text-primary font-thin">
                     {keyy}
                 </span>
-                <span className="">{val}</span>
+                {requestPending ? (
+                    <LoadingImg
+                        customClass={`w-[25px] transition-all duration-[250ms] "opacity-100"`}
+                    />
+                ) : (
+                    <span className="">{val}</span>
+                )}
             </div>
         );
     };

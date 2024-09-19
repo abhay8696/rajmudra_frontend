@@ -77,9 +77,7 @@ const NewShopForm = () => {
                 navigate(`/shop/${shop.shopNo}`);
             }
         } catch (err) {
-            const text = JSON.parse(
-                err?.message || '{"message": "Internal server error"}'
-            );
+            const text = err?.message || "Internal server error";
             console.log(text);
 
             SetErrorPop({ status: "show", text });
