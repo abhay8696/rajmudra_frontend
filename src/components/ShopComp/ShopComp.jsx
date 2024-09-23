@@ -7,9 +7,11 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ShopComp.css";
 //backend functions
 import { shopRequests } from "../../functions/backendFunctions";
+//helper functions
+import { formatDate } from "../../functions/functions";
+//components
 import Navbar from "../Navbar/Navbar";
 import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
-import { formatDate } from "../../functions/functions";
 import Button from "../Button/Button";
 import BackButton from "../BackButton/BackButton";
 import LoadingImg from "../LoadingImg/LoadingImg";
@@ -174,7 +176,7 @@ const ShopComp = () => {
                         <ShopInfo keyy="tenure" val={shopData?.tenure} />
                     </div>
                 </div>
-                <Payments shopNo={shopNo} />
+                <Payments shopNo={shopNo} shopId={shopData?.shopId} />
             </div>
         </>
     );

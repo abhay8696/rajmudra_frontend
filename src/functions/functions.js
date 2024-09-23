@@ -69,6 +69,15 @@ export const getFromLocal = (name) => {
     return null;
 };
 
+//function to convert new Date() into the format "YYYY-MM-DD" (like "2024-09-17")
+export const formatDateToYYYYMMDD = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based, so add 1
+    const day = String(date.getDate()).padStart(2, "0"); // Ensures 2 digits (e.g., 01)
+
+    return `${year}-${month}-${day}`;
+};
+
 export const formatDate = (isoString) => {
     if (!isoString) return "No date found";
     const date = new Date(isoString);

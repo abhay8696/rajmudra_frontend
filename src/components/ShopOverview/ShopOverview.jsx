@@ -38,7 +38,7 @@ const ShopOverview = (props) => {
 
         try {
             const allShops = await getAllShops_from_server(token);
-            console.log(allShops);
+            // console.log(allShops);
             setShops(allShops);
         } catch (err) {
             console.log(err.message);

@@ -141,6 +141,17 @@ p {
     cursor: pointer;
 }
 
+select {
+    -webkit-appearance: none; /* Hides the arrow in Chrome, Safari, and Edge */
+    -moz-appearance: none; /* Hides the arrow in Firefox */
+    appearance: none; /* Hides the arrow in modern browsers */
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: white;
+    background-image: none; /* Ensures no background image is shown */
+    cursor: pointer;
+}
+
 .commonPadding_with_Nav {
     padding-top: calc(100px + 1rem); /* nav height + 1rem */
     padding-left: 1rem;
