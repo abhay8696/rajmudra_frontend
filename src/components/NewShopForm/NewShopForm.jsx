@@ -11,10 +11,10 @@ import { shopRequests } from "../../functions/backendFunctions";
 import "./NewShopForm.css";
 //components
 import Button from "../Button/Button";
-import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
 import LoadingImg from "../LoadingImg/LoadingImg";
 import BackButton from "../BackButton/BackButton";
 import Navbar from "../Navbar/Navbar";
+import PopUp from "../PopUp/PopUp";
 
 const NewShopForm = () => {
     //states
@@ -36,7 +36,7 @@ const NewShopForm = () => {
             endDate: "",
         },
     });
-    const [errorPop, SetErrorPop] = useState({
+    const [popUpState, setPopUpState] = useState({
         status: "none", // none/show/hide
         text: "",
     });
@@ -50,10 +50,10 @@ const NewShopForm = () => {
     const token = useSelector((state) => state.token.value);
 
     //functions
-    const closeErrPop = () => SetErrorPop({ ...errorPop, status: "hide" });
+    const closePopUp = () => setPopUpState({ ...popUpState, status: "hide" });
     const handleSubmit = (event) => {
         event.preventDefault();
-        closeErrPop();
+        closePopUp();
         if (!token) navigate("/login");
         sendReq();
     };
@@ -80,7 +80,7 @@ const NewShopForm = () => {
             const text = err?.message || "Internal server error";
             console.log(text);
 
-            SetErrorPop({ status: "show", text });
+            setPopUpState({ status: "show", text });
         }
         setRequestPending(false);
     };
@@ -116,10 +116,11 @@ const NewShopForm = () => {
 
     return (
         <>
-            <ErrorPopUp
-                text={errorPop.text}
-                closePopUp={closeErrPop}
-                status={errorPop.status}
+            <PopUp
+                text={popUpState.text}
+                closePopUp={closePopUp}
+                status={popUpState.status}
+                errorPopUp={true}
             />
             <Navbar />
             <div className="NewShopForm-wrapper commonPadding_with_Nav flex flex-col gap-8 ">

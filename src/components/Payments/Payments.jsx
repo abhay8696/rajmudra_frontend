@@ -5,8 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { paymentsRequests } from "../../functions/backendFunctions";
 import { formatDate } from "../../functions/functions";
 import PaymentForm from "../PaymentForm/PaymentForm";
-import Button from "../Button/Button";
-import Notification from "../Notification/Notification";
+import PopUp from "../PopUp/PopUp";
 
 const Payments = (props) => {
     const { shopNo, shopId } = props;
@@ -14,6 +13,10 @@ const Payments = (props) => {
     //states
     const [paymentsArr, setPaymentsArr] = useState([]);
     const [formOn, setFormOn] = useState(false);
+    const [popUpState, SetPopUpState] = useState({
+        status: "none", // none/show/hide
+        text: "",
+    });
 
     //redux
     const token = useSelector((state) => state.token.value);
@@ -24,6 +27,10 @@ const Payments = (props) => {
     }, []);
 
     //functions
+    const closePopUp = () => {
+        SetPopUpState({ ...popUpState, status: "hide" });
+    };
+
     const fetchPayments = async () => {
         const getPayments = await paymentsRequests({
             method: "get",
@@ -43,11 +50,20 @@ const Payments = (props) => {
                 shop={item.shopNo}
                 method={item.paymentMethod}
                 date={formatDate(item.date)}
+                key={`${item.shopNo}-payments`}
             />
         ));
     };
 
-    const handleForm = () => setFormOn((pre) => !pre);
+    const handleForm = (msg) => {
+        setFormOn((pre) => !pre);
+        console.log(msg);
+        if (msg === "success")
+            SetPopUpState({
+                status: "show", // none/show/hide
+                text: "payment added successfully !",
+            });
+    };
 
     //sub-component
     const TableRow = ({ amt, shop, method, date, headRow }) => {
@@ -87,6 +103,12 @@ const Payments = (props) => {
 
     return (
         <>
+            <PopUp
+                text={popUpState.text}
+                closePopUp={closePopUp}
+                status={popUpState.status}
+                errorPopUp={false}
+            />
             <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between ">
                     <h3 className="text-left capitalize" onClick={handleForm}>
@@ -120,7 +142,6 @@ const Payments = (props) => {
                     re_fetchPayments={fetchPayments}
                 />
             )}
-            <Notification msg="New Payment Created" />
         </>
     );
 };

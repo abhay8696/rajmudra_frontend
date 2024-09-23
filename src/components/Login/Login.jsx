@@ -13,9 +13,8 @@ import logoIcon from "../../assets/logo.svg";
 import { getFromLocal, saveToLocal } from "../../functions/functions";
 import { loginReq_to_Server } from "../../functions/backendFunctions";
 //components
-import Notification from "../Notification/Notification";
 import Button from "../Button/Button";
-import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
+import PopUp from "../PopUp/PopUp";
 
 const Login = () => {
     //redux
@@ -24,7 +23,7 @@ const Login = () => {
     const dispatch = useDispatch();
     //states
     const [formData, setFormData] = useState({ contact: "", password: "" });
-    const [errorPop, SetErrorPop] = useState({
+    const [popUpState, setPopUpState] = useState({
         status: "none", // none/show/hide
         text: "",
     });
@@ -44,7 +43,7 @@ const Login = () => {
     }, []);
 
     //functions
-    const closeErrPop = () => SetErrorPop({ ...errorPop, status: "hide" });
+    const closePopUp = () => setPopUpState({ ...popUpState, status: "hide" });
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -52,7 +51,7 @@ const Login = () => {
     };
 
     const handleChange = (event) => {
-        closeErrPop();
+        closePopUp();
         setFormData({
             ...formData,
             [event.target.name]: event.target.value,
@@ -79,12 +78,12 @@ const Login = () => {
                 err.message === "Incorrect contact or password" ||
                 err.message === "Admin does not exist"
             ) {
-                SetErrorPop({
+                setPopUpState({
                     status: "show",
                     text: "Incorrect contact or password",
                 });
             } else {
-                SetErrorPop({
+                setPopUpState({
                     status: "show",
                     text: "Internal server error, please try again later",
                 });
@@ -94,10 +93,11 @@ const Login = () => {
 
     return (
         <>
-            <ErrorPopUp
-                text={errorPop.text}
-                closePopUp={closeErrPop}
-                status={errorPop.status}
+            <PopUp
+                text={popUpState.text}
+                closePopUp={closePopUp}
+                status={popUpState.status}
+                errorPopUp={true}
             />
             <div className="LoginWrapper flex flex-col items-center justify-center gap-16">
                 <div className="flex flex-col justify-center items-center gap-2">

@@ -590,6 +590,10 @@ video {
   top: 0px;
 }
 
+.z-50 {
+  z-index: 50;
+}
+
 .mt-4 {
   margin-top: 1rem;
 }
@@ -829,6 +833,11 @@ video {
 .bg-semi-dark-blue {
   --tw-bg-opacity: 1;
   background-color: rgb(22 29 47 / var(--tw-bg-opacity));
+}
+
+.bg-green-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 101 52 / var(--tw-bg-opacity));
 }
 
 .p-2 {

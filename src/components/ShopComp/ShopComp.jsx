@@ -11,17 +11,17 @@ import { shopRequests } from "../../functions/backendFunctions";
 import { formatDate } from "../../functions/functions";
 //components
 import Navbar from "../Navbar/Navbar";
-import ErrorPopUp from "../ErrorPopUp/ErrorPopUp";
 import Button from "../Button/Button";
 import BackButton from "../BackButton/BackButton";
 import LoadingImg from "../LoadingImg/LoadingImg";
 import Payments from "../Payments/Payments";
+import PopUp from "../PopUp/PopUp";
 
 const ShopComp = () => {
     //states
     const [shopData, setShopData] = useState();
     const [requestPending, setRequestPending] = useState(false);
-    const [errorPop, SetErrorPop] = useState({
+    const [popUpState, setPopUpState] = useState({
         status: "none", // none/show/hide
         text: "",
     });
@@ -58,7 +58,7 @@ const ShopComp = () => {
     };
 
     //functions
-    const closeErrPop = () => SetErrorPop({ ...errorPop, status: "hide" });
+    const closePopUp = () => setPopUpState({ ...popUpState, status: "hide" });
     const loadShop = async () => {
         setRequestPending(true);
 
@@ -73,7 +73,7 @@ const ShopComp = () => {
             // console.log(shop);
 
             if (shop) {
-                if (!shop.length) SetErrorPop({ status: "show", text });
+                if (!shop.length) setPopUpState({ status: "show", text });
                 setShopData(shop[0]);
             }
         } catch (err) {
@@ -85,7 +85,7 @@ const ShopComp = () => {
             );
             // console.log(text);
 
-            SetErrorPop({ status: "show", text });
+            setPopUpState({ status: "show", text });
         }
 
         setRequestPending(false);
@@ -93,10 +93,11 @@ const ShopComp = () => {
 
     return (
         <>
-            <ErrorPopUp
-                text={errorPop.text}
-                closePopUp={closeErrPop}
-                status={errorPop.status}
+            <PopUp
+                text={popUpState.text}
+                closePopUp={closePopUp}
+                status={popUpState.status}
+                errorPopUp={true}
             />
             <Navbar />
             <div className="ShopComp-wrapper commonPadding_with_Nav flex flex-col gap-4">
