@@ -13,6 +13,7 @@ import { formatDate } from "../../functions/functions";
 import Button from "../Button/Button";
 import BackButton from "../BackButton/BackButton";
 import LoadingImg from "../LoadingImg/LoadingImg";
+import Payments from "../Payments/Payments";
 
 const ShopComp = () => {
     //states
@@ -107,7 +108,7 @@ const ShopComp = () => {
                         <span>{shopNo}</span>
                     </h1>
                 </div>
-                <div className="shopComp-body flex flex-col sm:flex-row flex-wrap gap-4">
+                <div className="shopComp-div-1 flex flex-col sm:flex-row flex-wrap gap-4">
                     <div className="flex-1 shopComp-owner flex flex-col gap-2 text-left">
                         <h3 className="text-left capitalize text-greyish-blue font-bold">
                             owner
@@ -173,6 +174,7 @@ const ShopComp = () => {
                         <ShopInfo keyy="tenure" val={shopData?.tenure} />
                     </div>
                 </div>
+                <Payments shopNo={shopNo} />
             </div>
         </>
     );
