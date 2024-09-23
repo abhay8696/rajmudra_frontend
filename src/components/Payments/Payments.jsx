@@ -8,7 +8,7 @@ import PaymentForm from "../PaymentForm/PaymentForm";
 import PopUp from "../PopUp/PopUp";
 
 const Payments = (props) => {
-    const { shopNo, shopId } = props;
+    const { shopNo, paymentsByEveryShop } = props;
 
     //states
     const [paymentsArr, setPaymentsArr] = useState([]);
@@ -35,9 +35,10 @@ const Payments = (props) => {
         const getPayments = await paymentsRequests({
             method: "get",
             token,
-            type: "condition",
-            conditionKey: "shopNo",
-            conditionVal: shopNo,
+            type: !paymentsByEveryShop ? "condition" : null,
+            conditionKey: !paymentsByEveryShop ? "shopNo" : null,
+            conditionVal: !paymentsByEveryShop ? shopNo : null,
+            paymentId: paymentsByEveryShop ? "all" : null,
         });
         setPaymentsArr(getPayments);
     };
@@ -111,9 +112,8 @@ const Payments = (props) => {
             />
             <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between ">
-                    <h3 className="text-left capitalize" onClick={handleForm}>
-                        <span className="">{"payments "}</span>
-                        {shopNo && `for ${shopNo}`}
+                    <h3 className="text-left capitalize text-greyish-blue font-bold">
+                        payments
                     </h3>
                     <span
                         onClick={handleForm}

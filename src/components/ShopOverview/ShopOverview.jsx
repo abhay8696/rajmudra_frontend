@@ -75,7 +75,7 @@ const ShopOverview = (props) => {
     return (
         <>
             <div className="ShopOverview text-left rounded-xl flex flex-col gap-4">
-                <h3 className="flex gap-4">
+                <h3 className="flex gap-4 text-left capitalize text-greyish-blue font-bold">
                     <span>Shops</span>
                     <LoadingImg
                         customClass={`w-[25px] transition-all duration-[250ms] ${

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 //components
 import Navbar from "../Navbar/Navbar";
 import ShopOverview from "../ShopOverview/ShopOverview";
+import Payments from "../Payments/Payments";
 
 const Dashboard = () => {
     //redux
@@ -25,11 +26,18 @@ const Dashboard = () => {
     return (
         <>
             <Navbar />
-            <div className="Dashboard commonPadding_with_Nav flex flex-col gap-4">
+            <div className="Dashboard commonPadding_with_Nav flex flex-col gap-8">
                 {/* <h1 className="text-left">Dashboard</h1> */}
                 {/* <h2>hello {admin.name}</h2> */}
+                <div className="flex gap-2 flex items-center justify-start">
+                    <h1 className="text-left">
+                        <span className="text-primary">{"Dash"}</span>
+                        <span>board</span>
+                    </h1>
+                </div>
                 <ShopOverview />
-                <h3 className="text-left mt-4">Daily Collections</h3>
+                <div className="breaker border-b border-semi-dark-blue"></div>
+                <Payments paymentsByEveryShop={true} />
             </div>
         </>
     );

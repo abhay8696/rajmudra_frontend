@@ -111,6 +111,7 @@ const ShopComp = () => {
                         <span>{shopNo}</span>
                     </h1>
                 </div>
+                <div className="breaker border-b border-semi-dark-blue"></div>
                 <div className="shopComp-div-1 flex flex-col sm:flex-row flex-wrap gap-4">
                     <div className="flex-1 shopComp-owner flex flex-col gap-2 text-left">
                         <h3 className="text-left capitalize text-greyish-blue font-bold">
@@ -177,7 +178,8 @@ const ShopComp = () => {
                         <ShopInfo keyy="tenure" val={shopData?.tenure} />
                     </div>
                 </div>
-                <Payments shopNo={shopNo} shopId={shopData?.shopId} />
+                <div className="breaker border-b border-semi-dark-blue"></div>
+                <Payments shopNo={shopNo} />
             </div>
         </>
     );
