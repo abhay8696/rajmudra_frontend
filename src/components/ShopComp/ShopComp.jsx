@@ -179,7 +179,12 @@ const ShopComp = () => {
                     </div>
                 </div>
                 <div className="breaker border-b border-semi-dark-blue"></div>
-                <Payments shopNo={shopNo} />
+                {shopData ? (
+                    <Payments
+                        shopNo={shopNo}
+                        shopPayments={shopData?.paymentHistory || []}
+                    />
+                ) : null}
             </div>
         </>
     );

@@ -10,14 +10,17 @@ const NewShopCard = (props) => {
     const { data } = props;
 
     return (
-        <div className="flex flex-col justify-center items-center gap-4 NewShopCard ShopCard p-4 bg-semi-dark-blue rounded-lg">
-            <Link to="/newShopForm">
+        <div className="flex flex-col justify-center items-center gap-4 NewShopCard ShopCard p-4 rounded-lg">
+            <Link
+                to="/newShopForm"
+                className="flex p-4 items-center justify-between sm:flex-col sm:justify-center gap-4"
+            >
                 <img
                     src={addShopIcon}
                     alt="add shop icon"
-                    className="w-[100px]"
+                    className="w-[50px] sm:w-[100px]"
                 />
-                <span>Add New Shop</span>
+                <span className="font-bold">Add New Shop</span>
             </Link>
         </div>
     );

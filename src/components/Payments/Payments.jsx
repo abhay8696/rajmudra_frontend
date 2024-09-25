@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+//styles
+import "./Payments.css";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 //backend functions
@@ -6,9 +8,11 @@ import { paymentsRequests } from "../../functions/backendFunctions";
 import { formatDate } from "../../functions/functions";
 import PaymentForm from "../PaymentForm/PaymentForm";
 import PopUp from "../PopUp/PopUp";
+//assets
+import billIcon from "../../assets/billCheck.svg";
 
 const Payments = (props) => {
-    const { shopNo, paymentsByEveryShop } = props;
+    const { shopNo, paymentsByEveryShop, shopPayments } = props;
 
     //states
     const [paymentsArr, setPaymentsArr] = useState([]);
@@ -32,6 +36,11 @@ const Payments = (props) => {
     };
 
     const fetchPayments = async () => {
+        if (shopPayments?.length) {
+            //if payments arr is recieved as props from shopComp
+            return setPaymentsArr(shopPayments);
+        }
+
         const getPayments = await paymentsRequests({
             method: "get",
             token,
@@ -51,7 +60,7 @@ const Payments = (props) => {
                 shop={item.shopNo}
                 method={item.paymentMethod}
                 date={formatDate(item.date)}
-                key={`${item.shopNo}-payments`}
+                key={item._id}
             />
         ));
     };
@@ -115,15 +124,20 @@ const Payments = (props) => {
                     <h3 className="text-left capitalize text-greyish-blue font-bold">
                         payments
                     </h3>
-                    <span
+                    <div
                         onClick={handleForm}
-                        className="bg-primary px-2 py-1 sm:px-4 sm:py-2 text-sm capitalize rounded-md cursor-pointer"
+                        className="flex gap-2 items-center bg-primary px-2 py-1 sm:px-4 sm:py-2 text-sm capitalize rounded-md cursor-pointer"
                     >
-                        new payment
-                    </span>
+                        <img
+                            src={billIcon}
+                            alt="bill icon"
+                            className="w-[25px]"
+                        />
+                        <span>new payment</span>
+                    </div>
                 </div>
                 <table className="w-[100%]">
-                    <thead className="">
+                    <thead className="w-[100%]">
                         <TableRow
                             amt="amount (₹)"
                             shop="shop"
@@ -132,7 +146,9 @@ const Payments = (props) => {
                             headRow={true}
                         />
                     </thead>
-                    <tbody>{displayPayments()}</tbody>
+                    <tbody className="paymentsTable-body flex flex-col">
+                        {displayPayments()}
+                    </tbody>
                 </table>
             </div>
             {formOn && (

@@ -133,7 +133,7 @@ const PaymentForm = (props) => {
                     <Button
                         text={"cancel"}
                         type={"cancel"}
-                        customClass="bg-dark-blue px-4 py-2 flex item-center justify-center"
+                        customClass="border border-primary px-4 py-2 flex item-center justify-center"
                         clickFunction={closeForm}
                     />
                 </div>

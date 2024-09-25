@@ -26,7 +26,7 @@ const Dashboard = () => {
     return (
         <>
             <Navbar />
-            <div className="Dashboard commonPadding_with_Nav flex flex-col gap-8">
+            <div className="Dashboard commonPadding_with_Nav flex flex-col gap-4">
                 {/* <h1 className="text-left">Dashboard</h1> */}
                 {/* <h2>hello {admin.name}</h2> */}
                 <div className="flex gap-2 flex items-center justify-start">
@@ -35,6 +35,7 @@ const Dashboard = () => {
                         <span>board</span>
                     </h1>
                 </div>
+                <div className="breaker border-b border-semi-dark-blue"></div>
                 <ShopOverview />
                 <div className="breaker border-b border-semi-dark-blue"></div>
                 <Payments paymentsByEveryShop={true} />

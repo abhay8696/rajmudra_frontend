@@ -1,0 +1,4 @@
+.paymentsTable-body {
+    max-height: 70vh !important;
+    overflow-y: auto;
+}
