@@ -41,7 +41,7 @@ const ShopComp = () => {
     const ShopInfo = ({ keyy, val, valClass }) => {
         return (
             <div className="flex gap-2 justify-start items-start">
-                <span className="w-[20%] uppercase text-sm text-primary font-light">
+                <span className="w-[20%] uppercase text-sm text-primary font-bold">
                     {keyy}
                 </span>
                 {requestPending ? (

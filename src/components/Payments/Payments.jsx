@@ -10,6 +10,7 @@ import PaymentForm from "../PaymentForm/PaymentForm";
 import PopUp from "../PopUp/PopUp";
 //assets
 import billIcon from "../../assets/billCheck.svg";
+import { Link } from "react-router-dom";
 
 const Payments = (props) => {
     const { shopNo, paymentsByEveryShop, shopPayments } = props;
@@ -101,9 +102,24 @@ const Payments = (props) => {
                 <td className={`${class_td} text-[12px] sm:text-[1rem] py-4`}>
                     {amt}
                 </td>
-                <td className={`${class_td} text-[12px] sm:text-[1rem] py-4`}>
-                    {shop}
-                </td>
+                {paymentsByEveryShop && !headRow ? (
+                    <Link
+                        to={`/shop/${shop}`}
+                        className="flex justify hover:bg-primary"
+                    >
+                        <td
+                            className={`${class_td} text-[12px] sm:text-[1rem] py-4 flex-1`}
+                        >
+                            {shop}
+                        </td>
+                    </Link>
+                ) : (
+                    <td
+                        className={`${class_td} text-[12px] sm:text-[1rem] py-4`}
+                    >
+                        {shop}
+                    </td>
+                )}
                 <td className={`${class_td} text-[12px] sm:text-[1rem] py-4`}>
                     {method}
                 </td>
