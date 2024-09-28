@@ -27,7 +27,6 @@ const ShopComp = () => {
     });
 
     //router
-    const navigate = useNavigate();
     const { shopNo } = useParams();
 
     //redux
@@ -35,15 +34,14 @@ const ShopComp = () => {
 
     //side effects
     useEffect(() => {
-        if (!token) navigate("/");
         loadShop();
     }, []);
 
     //sub-components
-    const ShopInfo = ({ keyy, val }) => {
+    const ShopInfo = ({ keyy, val, valClass }) => {
         return (
             <div className="flex gap-2 justify-start items-start">
-                <span className="w-[20%] uppercase text-sm text-primary font-thin">
+                <span className="w-[20%] uppercase text-sm text-primary font-light">
                     {keyy}
                 </span>
                 {requestPending ? (
@@ -51,7 +49,13 @@ const ShopComp = () => {
                         customClass={`w-[25px] transition-all duration-[250ms] "opacity-100"`}
                     />
                 ) : (
-                    <span className="">{val}</span>
+                    <span
+                        className={
+                            keyy === "reg no." ? "uppercase" : "capitalize"
+                        }
+                    >
+                        {val}
+                    </span>
                 )}
             </div>
         );
@@ -73,17 +77,13 @@ const ShopComp = () => {
             // console.log(shop);
 
             if (shop) {
-                if (!shop.length) setPopUpState({ status: "show", text });
+                if (!shop.length)
+                    setPopUpState({ status: "show", text: "Shop Not found" });
                 setShopData(shop[0]);
             }
         } catch (err) {
-            console.log(err);
-            console.log(err.status);
-
-            const text = JSON.parse(
-                err?.message || '{"message": "Internal server error"}'
-            );
-            // console.log(text);
+            const text = err?.message || "Internal server error";
+            console.log(text);
 
             setPopUpState({ status: "show", text });
         }

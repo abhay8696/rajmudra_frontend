@@ -10,11 +10,11 @@ import shopIcon from "../../assets/shop.svg";
 import LoadingImg from "../LoadingImg/LoadingImg";
 import Button from "../Button/Button";
 
-const CardText = ({ text, subText, bg, padding }) => {
+const CardText = ({ text, subText, bg, padding, textClass, customClass }) => {
     return (
-        <div className={`flex flex-col items-start`}>
+        <div className={`flex flex-col ${customClass} `}>
             <span
-                className={`font-bold text-[18px] leading-[1] ${padding} ${bg} rounded-sm`}
+                className={`${textClass} font-bold text-[18px] leading-[1] ${padding} ${bg} rounded-sm`}
             >
                 {text}
             </span>
@@ -40,19 +40,29 @@ const ShopCard = (props) => {
             <div className="flex justify-between items-start">
                 <img src={shopIcon} alt="shop icon" className="w-[40px]" />
                 <CardText
+                    customClass="items-center"
+                    textClass="uppercase"
                     text={data?.shopNo}
-                    subText={"shop no"}
+                    // subText={"shop no"}
                     bg={"bg-primary"}
                     padding={"px-2 py-1"}
                 />
             </div>
 
-            <CardText text={data?.ownerName || "Owner"} subText={"owner"} />
             <CardText
+                customClass="items-start"
+                textClass="capitalize"
+                text={data?.ownerName || "Owner"}
+                subText={"owner"}
+            />
+            <CardText
+                customClass="items-start"
+                textClass="uppercase"
                 text={data?.registrationNo || "REG123"}
                 subText={"registration"}
             />
             <CardText
+                customClass="items-start"
                 text={`₹${data?.monthlyRent || 10000}/-`}
                 subText={"rent"}
             />

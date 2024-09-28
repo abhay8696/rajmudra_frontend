@@ -54,7 +54,7 @@ const PaymentForm = (props) => {
             }
         } catch (err) {
             const text = err?.message || "Internal server error";
-            console.log(text);
+            // console.log(text);
 
             setPopUpState({ status: "show", text });
         }
@@ -62,6 +62,8 @@ const PaymentForm = (props) => {
     };
     const handleChange = (event) => {
         const { value, name } = event.target;
+
+        if (popUpState.status === "show") closePopUp();
 
         setFormData({ ...formData, [name]: value });
     };

@@ -20,7 +20,7 @@ const NewShopForm = () => {
     //states
     const [formData, setFormData] = useState({
         ownerName: "Jon snow",
-        shopNo: "s-90",
+        shopNo: "S-90",
         registrationNo: "reg500",
         ownerContact: "1234567890",
         ownerAddress: "123 Main Street, City, Country",
@@ -86,6 +86,9 @@ const NewShopForm = () => {
     };
     const handleChange = (event) => {
         const { name, value } = event.target;
+
+        if (popUpState.status === "show") closePopUp();
+
         setFormData((preFormData) => ({
             ...preFormData,
             [name]: value,
