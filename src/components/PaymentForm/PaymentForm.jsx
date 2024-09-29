@@ -29,6 +29,7 @@ const PaymentForm = (props) => {
 
     //redux
     const token = useSelector((state) => state.token.value);
+    const shops = useSelector((state) => state.shops.value);
 
     //functions
     const closePopUp = () => {
@@ -101,16 +102,21 @@ const PaymentForm = (props) => {
                                 className="max-w-[75vw] w-[300px] px-4 py-2 bg-semi-dark-blue border border-semi-dark-blue focus:border-primary border-solid rounded-lg"
                                 required
                             />
-                            <input
-                                placeholder="shop number"
-                                value={shopNo || formData.shopNo}
-                                type="text"
-                                onChange={handleChange}
-                                name="shopNo"
-                                className="max-w-[75vw] w-[300px] px-4 py-2 bg-semi-dark-blue border border-semi-dark-blue focus:border-primary border-solid rounded-lg"
+                            <select
                                 disabled={shopNo ? true : false}
-                                required
-                            />
+                                placeholder="shop number"
+                                name="shopNo"
+                                onChange={handleChange}
+                                value={shopNo || formData.shopNo}
+                                className="capitalize max-w-[75vw] w-[300px] px-4 py-2 bg-semi-dark-blue border border-semi-dark-blue focus:border-primary border-solid rounded-lg"
+                            >
+                                {shops.map((shop) => (
+                                    <option value={shop.shopNo}>
+                                        shop: {shop.shopNo}
+                                    </option>
+                                ))}
+                            </select>
+
                             <select
                                 name="paymentMethod"
                                 onChange={handleChange}
