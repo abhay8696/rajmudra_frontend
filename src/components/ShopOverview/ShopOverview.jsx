@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "../../redux/token/tokenSlice";
 import { setAdmin } from "../../redux/admin/adminSlice";
+import { setShops } from "../../redux/shops/shopsSlice";
 //styles
 import "./ShopOverview.css";
 import { getAllShops_from_server } from "../../functions/backendFunctions";
@@ -16,7 +17,6 @@ const ShopOverview = (props) => {
     const { inDashBoard } = props;
 
     //states
-    const [shops, setShops] = useState();
     const [requestPending, setRequestPending] = useState(false);
 
     //router
@@ -24,6 +24,8 @@ const ShopOverview = (props) => {
 
     //redux
     const token = useSelector((state) => state.token.value);
+    const shops = useSelector((state) => state.shops.value);
+    const dispatch = useDispatch();
     //on load
     useEffect(() => {
         // const getAllShop = await getAllShops_from_server(token);
@@ -39,7 +41,7 @@ const ShopOverview = (props) => {
         try {
             const allShops = await getAllShops_from_server(token);
             // console.log(allShops);
-            setShops(allShops);
+            dispatch(setShops(allShops));
         } catch (err) {
             console.log(err.message);
             if (
@@ -51,6 +53,7 @@ const ShopOverview = (props) => {
                 localStorage.setItem("token", null);
                 dispatch(setToken(null));
                 dispatch(setAdmin(null));
+                dispatch(setShops([]));
             }
             navigate("/error");
         }

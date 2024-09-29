@@ -10,7 +10,7 @@ import PaymentForm from "../PaymentForm/PaymentForm";
 import PopUp from "../PopUp/PopUp";
 //assets
 import billIcon from "../../assets/billCheck.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Payments = (props) => {
     const { shopNo, paymentsByEveryShop, shopPayments } = props;
@@ -25,6 +25,9 @@ const Payments = (props) => {
 
     //redux
     const token = useSelector((state) => state.token.value);
+
+    //router
+    const navigate = useNavigate();
 
     // side-effects
     useEffect(() => {
@@ -103,16 +106,12 @@ const Payments = (props) => {
                     {amt}
                 </td>
                 {paymentsByEveryShop && !headRow ? (
-                    <Link
-                        to={`/shop/${shop}`}
-                        className="flex justify hover:bg-primary"
+                    <td
+                        onClick={() => navigate(`/shop/${shop}`)}
+                        className={`${class_td} hover:bg-primary text-[12px] sm:text-[1rem] py-4 flex-1`}
                     >
-                        <td
-                            className={`${class_td} text-[12px] sm:text-[1rem] py-4 flex-1`}
-                        >
-                            {shop}
-                        </td>
-                    </Link>
+                        {shop}
+                    </td>
                 ) : (
                     <td
                         className={`${class_td} text-[12px] sm:text-[1rem] py-4`}
